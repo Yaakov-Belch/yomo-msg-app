@@ -1,0 +1,45 @@
+{
+  "name": "yomo-msg-app",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Real-time messaging with yomo. Thre redundant servers.",
+  "author": "Yaakov Belch",
+  "license": "Apache-2.0",
+  "scripts": {
+    "mosca": "mosca --host 0.0.0.0 --http-port 8080 --http-static www",
+    "servers": "./autoRestart -5000 'npm run mosca' 'node lib/srv.js Srv1' 'node lib/srv.js Srv2' 'node lib/srv.js Srv3'",
+    "lib": "babel src -d lib",
+    "bundle": "browserify src/client.js -o www/bundle.js",
+    "build": "npm run lib && npm run bundle",
+    "demo": "npm run build && npm run servers",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react",
+      "stage-2"
+    ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-core": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-2": "^6.5.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.0.0"
+  },
+  "dependencies": {
+    "mobx": "^2.4.4",
+    "mosca": "^1.4.1",
+    "react": "^15.1.0",
+    "shortid": "^2.2.4",
+    "yomo": "1.3.0"
+  }
+}

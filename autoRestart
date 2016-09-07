@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+'use strict';
+
+var spawn = require('child_process').spawn;
+var delay=500; var repeat=true;
+
+// On non-windows systems, we create and kill process groups.
+let win32=(process.platform === 'win32');
+
+var args=process.argv.slice(2);
+while(args[0] && args[0].substr(0,1)==='-') {
+  var opt=args.shift();
+  if(opt.match(/^-\d+$/)) { delay=-1*opt; }
+  else {
+    console.log('autoRestart [-500] "command args"...');
+    console.log('Run one or more commands (in parallel).');
+    console.log('When a command terminates for any reason,');
+    console.log('restart it after a delay (default: 500ms).');
+    console.log('Stop all processes with SIGINT.');
+  }
+}
+
+var tasks=args.map(function(cmd){return [cmd];});
+tasks.forEach(function(task){ run(task,0); });
+
+process.on('SIGINT',  stopAll);
+process.on('SIGTERM', stopAll);
+process.on('SIGHUP',  stopAll);
+
+function run(task,dt) { setTimeout(function(){
+  var cmd=task[0];
+  // console.log('start:', cmd);
+  var sh      =win32? 'cmd.exe':'sh';
+  var args    =win32? ['/c',cmd]:['-c',cmd];
+  var detached=win32? false:true;
+  var child=task[1]=spawn(sh,args,{
+    detached,
+    cwd: process.cwd,
+    env: process.env,
+    stdio: ['pipe', process.stdout, process.stderr]
+  });
+  child.on('exit',function(code,sig){
+    // console.log('stop:',cmd,code,sig);
+    repeat && run(task,delay);
+  });
+},dt||0);}
+
+function sigAll(tasks,signal) {
+  tasks.forEach(function(task){
+    var child=task[1]; var pid=child.pid;
+    if(!win32) { pid=-pid; } // kill the whole process group.
+    try {process.kill(pid,signal);} catch(e) {}
+  });
+}
+
+function stopAll(){
+  repeat=false;
+  sigAll(tasks,'SIGINT');
+  process.exit(0);
+}
+
+
