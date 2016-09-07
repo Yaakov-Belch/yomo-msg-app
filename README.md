@@ -7,7 +7,8 @@
     npm install
     npm run demo
 
-Once you see the big MOSCA logo visit: http://localhost:8080/
+Once you see the big MOSCA logo visit:
+[http://localhost:8080/](http://localhost:8080/)
 
 ## Three versions:
 

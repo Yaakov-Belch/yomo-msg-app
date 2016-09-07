@@ -1,10 +1,31 @@
 {
   "name": "yomo-msg-app",
-  "private": true,
   "version": "1.0.0",
-  "description": "Real-time messaging with yomo. Thre redundant servers.",
   "author": "Yaakov Belch",
   "license": "Apache-2.0",
+  "private": true,
+  "description": "Real-time messaging with yomo. Three redundant servers.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yaakov-Belch/yomo-msg-app.git"
+  },
+  "homepage": "https://github.com/Yaakov-Belch/yomo-msg-app#readme",
+  "bugs": {
+    "url": "https://github.com/Yaakov-Belch/yomo-msg-app/issues"
+  },
+  "keywords": [
+    "Yomo",
+    "React",
+    "Redux",
+    "Mobx",
+    "MQTT",
+    "reactive",
+    "client",
+    "server",
+    "fullstack",
+    "p2p",
+    "messaging"
+  ],
   "scripts": {
     "mosca": "mosca --host 0.0.0.0 --http-port 8080 --http-static www",
     "servers": "./autoRestart -5000 'npm run mosca' 'node lib/srv.js Srv1' 'node lib/srv.js Srv2' 'node lib/srv.js Srv3'",
