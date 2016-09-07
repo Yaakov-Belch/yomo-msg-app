@@ -14,6 +14,7 @@
     "url": "https://github.com/Yaakov-Belch/yomo-msg-app/issues"
   },
   "keywords": [
+    "Yomo",
     "React",
     "Redux",
     "Mobx",
@@ -21,7 +22,9 @@
     "reactive",
     "client",
     "server",
-    "fullstack"
+    "fullstack",
+    "p2p",
+    "messaging"
   ],
   "scripts": {
     "mosca": "mosca --host 0.0.0.0 --http-port 8080 --http-static www",
