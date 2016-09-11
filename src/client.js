@@ -71,7 +71,7 @@ const srvButton=(yomo,srv)=>{
   return {
     style:(srv===selectSrv(yomo,servers))?softSelected:soft,
     onClick:()=>
-      yomo.dispatch({type:'boot',srv,time:timeNow()+bootTime}),
+      yomo.dispatch({type:'boot',srv,time:timeNow(yomo)+bootTime}),
   };
 };
 const boot=(state={},action)=>{
