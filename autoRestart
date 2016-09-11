@@ -29,7 +29,7 @@ process.on('SIGHUP',  stopAll);
 
 function run(task,dt) { setTimeout(function(){
   var cmd=task[0];
-  console.log('start:', cmd);
+  // console.log('start:', cmd);
   var sh      =win32? 'cmd.exe':'sh';
   var args    =win32? ['/c',cmd]:['-c',cmd];
   var detached=win32? false:true;
@@ -40,7 +40,7 @@ function run(task,dt) { setTimeout(function(){
     stdio: ['pipe', process.stdout, process.stderr]
   });
   child.on('exit',function(code,sig){
-    console.log('stop:',cmd,code,sig);
+    // console.log('stop:',cmd,code,sig);
     repeat && run(task,delay);
   });
 },dt||0);}
